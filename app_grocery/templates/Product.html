@@ -1,0 +1,38 @@
+{% extends "structure.html" %}
+{% block inside %}
+<div class="d-flex justify-content-center align-items-center" style="padding-top:1%;">
+    <h1 class="border-top pt-10">
+      <small class="text-muted" style="font-size: medium;">
+        <a class="btn btn-large ml-2" style="background-color:black;font-size:larger;font-weight: bolder;color:white;" href="{{ url_for('view_category') }}">← GO BACK</a>
+      </small>
+    </h1>
+  </div>
+<div class="container-fluid">
+  <div class="container-fluid">
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3 col-md-push-3" style="padding-bottom: 0.5%;">
+            <div class="card card-card2">
+              <div class="card_title"><img src="{{ url_for('static', filename=product.image) }}" style="width:100%;max-height:200px;"></div>
+              <div class="card-title2">{{ product.name }}</div>
+                <div class="card-body2">
+                    <p class="p">Expiry Date:{{ product.exp_date }}</p>
+                    <p class="p">Price/unit:{{ product.price }} Rs</p>
+                    <p class="p">Category:{{ product.Category.name }}</p>
+                    {% if product.stock > 0 %}
+                        In Stock:
+                        <div class="card-title2">{{ product.stock }}</div>
+                    {% else %}
+                        <div class="card-title2" style="color: red;">Out of stock!</div>
+                    {% endif %}
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a class="btn btn-success btn-sm m-1" href="{{ url_for('update_product', product_id=product.id) }}" style="color: black;font-weight: bolder;"> Update</a>
+                        <a class="btn btn-danger btn-sm m-1" href="{{ url_for('confirm_delete_product', product_id=product.id) }}" style="color: black;font-weight: bolder;">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock inside %}

@@ -1,0 +1,135 @@
+{% extends 'structure2.html' %}
+{% block inside %}
+<h1 class="text-center" style="padding-top:2%;">Cart Summary</h1>
+<table class="table">
+    <style>
+        tr,td,
+        th {
+            text-align: center;
+        }
+    </style>
+    <thead class="thead-dark">
+        <tr>
+            <th>Product Name</th>
+            <th>Price/Unit</th>
+            <th>Quantity</th>
+            <th>Increase Quantity</th>
+            <th>Total Cost</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    {% for item in list %}
+    {% if item.count>0 %}
+    <tr>
+        {% for product in products %}
+
+        {% if product.id == item.product_id %}
+        <td>{{ product.name }}</td>
+        <td>₹{{ product.price }}</td>
+
+        <td> {{item.count}} </td>
+        <td>
+
+            <form action="{{ url_for('orders',user_id=user_id,product_id=product.id) }}" method="POST">
+                {{form.hidden_tag()}}
+                <div class="input-group">
+                    {{ form.quantity(class="form-control form-control-lg", placeholder="Increase quantity by"
+                    ,style="height:37px;width:15px;") }}
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" style="height: 37px;">{{ form.submit.label
+                            }}</button>
+                    </div>
+                </div>
+
+            </form>
+        </td>
+        <td>₹{{ item.total_price }}</td>
+        <td>
+            <form action="{{ url_for('delete',user_id=user_id,product_id=product.id) }}" method="POST"><button
+                    type="submit" class="btn btn-primary">Delete</button>
+            </form>
+        </td>
+        {% endif %}
+        {% endfor %}
+
+
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+{% if tq>0 %}
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="card my-4" style="border-color: black;border-width: 2px;">
+        <div class="card-body">
+          {% if tc < 500 %}
+            <h6 class="card-title text-center text-danger">Free delivery on cart value above Rs 500!!</h6>
+          {% else %}
+            <h6 class="card-title text-center text-success">Free delivery!!</h6>
+          {% endif %}
+          <h4 class="card-title text-center" style="color: black;">Order Slip</h4>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Total Number of items:</th>
+                <td>{{ tq }}</td>
+              </tr>
+            </thead>
+            {% if tc < 500 %}
+              <tbody>
+                <tr class="text-danger">
+                  <th>Total Amount:</th>
+                  <td>₹{{tc}}</td>
+                </tr>
+                <tr class="text-danger">
+                  <th>Delivery Charges:</th>
+                  <td>₹50</td>
+                </tr>
+                <tr class="bg-success text-white">
+                  <th>Grand Total</th>
+                  <td>₹{{ tc + 50 }}</td>
+                </tr>
+              </tbody>
+            {% else %}
+              <tbody>
+                <tr class="text-success">
+                  <th>Total Amount:</th>
+                  <td>₹{{tc}}</td>
+                </tr>
+                <tr class="text-success">
+                  <th>Delivery Charges:</th>
+                  <td>Free</td>
+                </tr>
+                <tr class="bg-success text-white">
+                  <th>Grand Total</th>
+                  <td>₹{{ tc }}</td>
+                </tr>
+              </tbody>
+            {% endif %}
+          </table>
+  
+          <footer class="card-title text-center">
+            <a class="btn btn-danger btn-sm m-1" href="#popup1">Buy all</a>
+          </footer>
+  
+          <div id="popup1" class="overlay">
+            <div class="popup">
+              <p style="font-size: medium; text-align: center; color: black; font-weight: bolder;">Are you sure you want to buy?</p>
+              <a class="close" href="#">&times;</a>
+              <div class="d-flex  justify-content-center align-items-center border-top" style="height: 100px;">
+                <a href="#" class="centered-link btn bn-secondary mr-2" style="background-color: black; color: white;">No</a>
+                <form action="{{ url_for('buy_all') }}" method="POST">
+                  <input class="btn btn-danger" type="submit" value="Yes">
+                </form>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endif %}
+  
+{% endblock %}

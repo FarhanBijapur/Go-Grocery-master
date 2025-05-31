@@ -1,0 +1,34 @@
+{% extends "structure.html" %}
+{% block inside %}
+<div class="content d-flex justify-content-center align-items-center" style="margin-top: 150px;">
+    <div class="card">
+        <div class="card-title"><img src="{{ url_for('static', filename='category.png') }}" alt="Icon" style="width: 250px; height: 160px;"/>
+            <div style="text-align: center; font-size: larger;font-weight: bold;color: black;"> {{legend}}</div>   </div>
+       <div class="card-body">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+           <!-- bootstrap -->
+            <fieldset class="form-group justify-content-center">
+                <div class="form-group" style="text-align: center;">
+                    {{ form.name.label(class="form-control-label") }}
+                    {{ form.name(class="form-control form-control-lg") }}
+                    {% for error in form.name.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+             </fieldset>
+            <div class="form-group" style="text-align: center;">
+                {{ form.submit(class="btn btn-large") }}
+            </div>
+                </form>
+       </div> 
+       <div class="card-footer">  <div class=" pt-4" style="text-align: center;">
+        <small class="text-muted" style="font-size:medium;">
+            <a class="ml-2" href="{{ url_for('view_category') }}">Go Back</a>
+        </small>
+    </div></div>
+</div>
+    
+    </div>
+    
+{% endblock inside %}

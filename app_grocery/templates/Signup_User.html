@@ -1,0 +1,46 @@
+{% extends "structure.html" %}
+{% block inside %}
+    <div class="content d-flex justify-content-center align-items-center" style="margin-top: 90px;">
+            <form method="POST" action="">
+            {{ form.hidden_tag() }}
+           <!-- bootstrap -->
+            <fieldset class="form-group justify-content-center" >
+                <legend class=" text-center" style="padding-top: 10px;">
+                    <img src="{{ url_for('static', filename='signup.png') }}" alt="Icon" style="width: 250px; height: 160px;"/></legend>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
+                    {{ form.username(class="form-control form-control-lg") }}
+                    {% for error in form.username.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {{ form.email(class="form-control form-control-lg") }}
+                    {% for error in form.email.errors %}    
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {{ form.password(class="form-control form-control-lg") }}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_password.label(class="form-control-label") }}
+                    {{ form.confirm_password(class="form-control form-control-lg") }}
+                    {% for error in form.confirm_password.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    {{ form.submit(class="btn btn-large") }}
+                </div>
+                <div class='pt-0' style="text-align: center;">
+                    <small class="text-muted" style="font-size:medium;">
+                        Already Have An Account? <a class="ml-2" href="{{ url_for('user_login') }}"> Sign In</a>
+                    </small>
+                </div>
+                </fieldset>
+                </form>
+                </div>
+    {% endblock inside %}

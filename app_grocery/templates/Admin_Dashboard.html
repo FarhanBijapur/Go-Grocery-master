@@ -1,0 +1,48 @@
+{% extends "structure.html" %}
+
+{% block inside %}
+<div class="container" style="padding-top: 1.5%;">
+  <h1 class="display-4 text-center my-5">Welcome Back!</h1>
+
+  <!-- Cards to display data -->
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-4">
+      <div class=" card card-card2 h-100">
+        <div class="card-body2">
+          <h5 class="card-title">Total number of users:</h5>
+          <p class="card-title2">{{ to }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card card-card2 h-100">
+        <div class="card-body2">
+          <h5 class="card-title">Total number of categories:</h5>
+          <p class="card-title2">{{ tc }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card card-card2 h-100">
+        <div class="card-body2">
+          <h5 class="card-title">Total number of products:</h5>
+          <p class="card-title2">{{ tp }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card card-card2">
+        <div class="card-body2">
+          <h5 class="card-title2">Stats</h5>
+          <div class="text-center">
+            <img src="{{ url_for('static', filename=filename) }}" class="img-fluid" alt="Admin Dashboard Chart">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock inside %}

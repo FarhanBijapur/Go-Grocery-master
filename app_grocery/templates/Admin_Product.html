@@ -1,0 +1,65 @@
+{% extends "structure.html" %}
+{% block inside %}
+<div class="content d-flex justify-content-center align-items-center" style="margin-top: 90px;">
+    <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+           <!-- bootstrap -->
+            <fieldset class="form-group justify-content-center">
+                <legend class=" text-center" style="padding-top: 10px;">
+                    <img src="{{ filename }}" alt="Icon" style="width: 250px; height: 150px;"/></legend>
+                    <div style="text-align: center; font-size: larger;font-weight: bold;color: black;"> {{legend}}</div>
+                    <div class="form-group">
+                    {{ form.name.label(class="form-control-label") }}
+                    {{ form.name(class="form-control form-control-lg") }}
+                    {% for error in form.name.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.exp_date.label(class="form-control-label") }}
+                    {{ form.exp_date(class="form-control form-control-lg") }}
+                    {% for error in form.exp_date.errors %}    
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.price.label(class="form-control-label") }}
+                    {{ form.price(class="form-control form-control-lg") }}
+                </div>
+                <div class="form-group">
+                    {{ form.stock.label(class="form-control-label") }}
+                    {{ form.stock(class="form-control form-control-lg") }}
+                    {% for error in form.stock.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.category_id.label }}
+                    {{ form.category_id() }}
+                    {% for error in form.stock.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.image.label() }}
+                    {{ form.image(class="form-control-file") }}
+                    {% if form.image.errors %}
+                    {% for error in form.image.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    {% endfor %} {% endif %}
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    {{ form.submit(class="btn btn-large") }}
+                </div>
+                <div  style="text-align: center;">
+                    <small class="text-muted" style="font-size:medium;">
+                        <a class="ml-2" href="{{ url_for('view_product') }}">Go Back</a>
+                    </small>
+                </div>
+            </fieldset>
+            
+        </form>
+    </div>
+    
+   
+    {% endblock inside %}

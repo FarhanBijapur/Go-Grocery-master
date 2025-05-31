@@ -1,0 +1,19 @@
+{% extends "structure.html" %}
+{% block inside %}
+<div class="container" >
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card" style="top:100%;">
+                <div class="card-body">
+                    <h5 class="card-title">Confirm Deletion</h5>
+                    <p class="card-text">Are you sure you want to delete the category: {{ category.name }}?</p>
+                    <form action="{{ url_for('confirm_delete_category', category_id=category.id) }}" method="POST">
+                        <input type="submit" class="btn btn-danger" value="Yes, Delete">
+                        <a href="{{ url_for('view_category') }}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock inside %}

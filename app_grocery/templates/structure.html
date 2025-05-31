@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Random Page</title>
+    {% endif %}
+</head>
+<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" style="padding-right: 6%;padding-bottom: 0%;height: fit-content;">
+    <a class="navbar-brand mr-4" href="/"><img src="{{ url_for('static', filename='companylogo.png') }}" alt="Icon"
+        style="width: 330px; height:85px;margin: 0;" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if current_user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item active">
+            <a class="dropdown-item" href="{{ url_for('logout') }}"
+            style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Log Out<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="dropdown-item" href="{{ url_for('admin_dashboard') }}"
+            style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Dashboard</a>
+        </li>
+        <li class="nav-item">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="manageDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"
+                style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;color: black;padding-top:10px;">
+                Manage
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="manageDropdown">
+                <li>
+                    <a class="dropdown-item" href="{{ url_for('view_category') }}"
+                        style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Manage Category</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ url_for('view_product') }}"
+                        style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Manage Products</a>
+                </li>
+            </ul>
+        </li></li>
+        </ul>
+      {% if forms %}
+            <div style="display: flex; align-items: center;">
+              <form method="POST" action="{{ url_for('search') }}" style="flex: 1;">
+                {{ forms.hidden_tag() }}
+                <div class="form-group">
+                  <div class="input-group" style="padding-top: 5%;">
+                      {{ forms.search(class="form-control form-control-lg", placeholder="Search for products/categories...",style="width:260px") }}
+                      <div class="input-group-append">
+                          {{ forms.submit(class="btn btn-primary", value="Search") }}
+                      </div>
+                  </div>
+                  {% for error in forms.search.errors %}
+                      <div class="alert alert-danger" role="alert">{{ error }}</div>
+                  {% endfor %}
+              </div>
+              </form>
+            </div>
+        {% endif %}
+        {% else %}
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="dropdown-item" href="{{ url_for('user_login') }}"
+                style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Sign In<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="dropdown-item" href="{{ url_for('register') }}"
+                      style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Sign Up</a>
+            </li>
+          
+            <li class="nav-item">
+                <a class="dropdown-item" href="{{ url_for('admin_login') }}"
+                      style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">Admin</a>
+            </li>
+            
+        </ul>
+       
+        {% endif %}
+    </div>
+  </nav>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  <div id="alert-message" class="alert alert-{{ category }} site-header">
+    {{ message }}
+  </div>
+
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  {% block inside %}{% endblock %}
+
+
+</body>
+
+</html>
